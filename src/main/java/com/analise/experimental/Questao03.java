@@ -52,12 +52,10 @@ public class Questao03 {
 	private static double preencherERemoverInicio(IntFunction<List<Integer>> fabrica, int quantidade) {
 		List<Integer> lista = fabrica.apply(quantidade);
 		
-		// Preencher a lista
 		for (int i = 0; i < quantidade; i++) {
 			lista.add(i);
 		}
 
-		// Medir tempo de remoção do início
 		long inicio = System.nanoTime();
 		while (!lista.isEmpty()) {
 			lista.remove(0);
@@ -68,12 +66,10 @@ public class Questao03 {
 	private static double preencherERemoverFim(IntFunction<List<Integer>> fabrica, int quantidade) {
 		List<Integer> lista = fabrica.apply(quantidade);
 		
-		// Preencher a lista
 		for (int i = 0; i < quantidade; i++) {
 			lista.add(i);
 		}
 
-		// Medir tempo de remoção do final
 		long inicio = System.nanoTime();
 		while (!lista.isEmpty()) {
 			lista.remove(lista.size() - 1);
