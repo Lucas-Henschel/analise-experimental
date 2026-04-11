@@ -5,13 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-/*
-*
-* O ArrayList foi significativamente mais rápido nos acessos aleatórios, pois permite acesso direto
-* por índice (tempo constante O(1)). Já o LinkedList precisa percorrer a lista até a posição
-* desejada (tempo O(n)), o que torna os acessos muito mais lentos.
-*
-* */
 public class Questao05 {
     private static final int TAMANHO = 10000;
     private static final int TESTES = 20;
@@ -40,6 +33,13 @@ public class Questao05 {
             System.out.println("LinkedList foi mais rápido");
             System.out.println("Foi " + arredondar(tempoArray / tempoLinked) + " vezes mais rápido");
         }
+
+        System.out.println();
+        System.out.println(
+            "O ArrayList foi significativamente mais rápido nos acessos aleatórios, pois permite acesso direto\n" +
+            "por índice (tempo constante O(1)). Já o LinkedList precisa percorrer a lista até a posição\n" +
+            "desejada (tempo O(n)), o que torna os acessos muito mais lentos."
+        );
     }
 
     private double testarArrayList() {
