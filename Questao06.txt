@@ -1,0 +1,5 @@
+Com base nos testes realizados foi possível observar algumas diferenças de desempenho entre o ArrayList e o LinkedList:
+
+O ArrayList foi mais vantajoso principalmente em cenários onde de acesso por índice e inserções ou remoções em posições aleatórias. Foi possível perceber isso nos testes de inserção em posições aleatórias, remoção de índices aleatórios e acessos diretos, onde ele foi significativamente mais rápido. Isso acontece porque o ArrayList permite acesso direto aos elementos por índice, evitando a necessidade de percorrer a estrutura.
+
+Já o LinkedList foi mais vantajoso no cenário de remoção do primeiro elemento. Nesse caso, ele teve um desempenho muito superior, pois basta ajustar as referências entre os nós, sem precisar mover outros elementos como acontece no ArrayList.
