@@ -3,7 +3,6 @@ package com.analise.experimental;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.IntFunction;
 
 public class Questao01 {
 
@@ -13,45 +12,61 @@ public class Questao01 {
 	private static final int[] CAPACIDADES = {10, 1_000, 100_000};
 
 	public static void main(String[] args) {
-		aquecerJVM(3);
+		new Questao01();
+	}
 
-		double mediaArrayList = mediaBenchmark(TESTES_COMPARATIVO, c -> new ArrayList<>(10), ELEMENTOS_POR_TESTE);
-		double mediaLinkedList = mediaBenchmark(TESTES_COMPARATIVO, c -> new LinkedList<>(), ELEMENTOS_POR_TESTE);
+	public Questao01() {
+		init();
+	}
+
+	private void init() {
+		double mediaArrayList = testarArrayListInsercaoFinal();
+		double mediaLinkedList = testarLinkedListInsercaoFinal();
 		exibirResultadoComparativo(mediaArrayList, mediaLinkedList);
+
+		System.out.println();
 
 		exibirResultadoCapacidades();
 	}
 
-	private static void aquecerJVM(int repeticoes) {
-		for (int i = 0; i < repeticoes; i++) {
-			preencher(c -> new ArrayList<>(10), ELEMENTOS_POR_TESTE);
-			preencher(c -> new LinkedList<>(), ELEMENTOS_POR_TESTE);
-		}
-	}
-
-	private static double mediaBenchmark(int testes, IntFunction<List<Integer>> fabrica, int quantidade) {
+	private double testarArrayListInsercaoFinal() {
 		double somaMs = 0;
-		for (int i = 0; i < testes; i++) {
-			somaMs += preencher(fabrica, quantidade);
+
+		for (int t = 0; t < TESTES_COMPARATIVO; t++) {
+			List<Integer> lista = new ArrayList<>(10);
+			long inicio = System.nanoTime();
+			preencherLista(lista);
+			somaMs += (System.nanoTime() - inicio) / 1_000_000.0;
 		}
-		return somaMs / testes;
+
+		return somaMs / TESTES_COMPARATIVO;
 	}
 
-	private static double preencher(IntFunction<List<Integer>> fabrica, int quantidade) {
-		List<Integer> lista = fabrica.apply(quantidade);
-		long inicio = System.nanoTime();
-		for (int i = 0; i < quantidade; i++) {
+	private double testarLinkedListInsercaoFinal() {
+		double somaMs = 0;
+
+		for (int t = 0; t < TESTES_COMPARATIVO; t++) {
+			List<Integer> lista = new LinkedList<>();
+			long inicio = System.nanoTime();
+			preencherLista(lista);
+			somaMs += (System.nanoTime() - inicio) / 1_000_000.0;
+		}
+
+		return somaMs / TESTES_COMPARATIVO;
+	}
+
+	private void preencherLista(List<Integer> lista) {
+		for (int i = 0; i < ELEMENTOS_POR_TESTE; i++) {
 			lista.add(i);
 		}
-		return (System.nanoTime() - inicio) / 1_000_000.0;
 	}
 
-	private static void exibirResultadoComparativo(double mediaArray, double mediaLinked) {
+	private void exibirResultadoComparativo(double mediaArray, double mediaLinked) {
 		boolean arrayMaisRapido = mediaArray < mediaLinked;
 		String maisRapida = arrayMaisRapido ? "ArrayList" : "LinkedList";
 		double fator = arrayMaisRapido ? mediaLinked / mediaArray : mediaArray / mediaLinked;
 
-		System.out.println("===== QUESTAO 1 - INSERCAO NO FINAL =====");
+		System.out.println("===== QUESTAO 1.1 - INSERCAO NO FINAL =====");
 		System.out.printf("Elementos por teste: %,d%n", ELEMENTOS_POR_TESTE);
 		System.out.printf("Quantidade de testes: %d%n%n", TESTES_COMPARATIVO);
 
@@ -60,16 +75,17 @@ public class Questao01 {
 
 		System.out.printf("Mais rapida: %s%n", maisRapida);
 		System.out.printf("Fator de velocidade: %.2fx%n%n", fator);
+		System.out.printf("Motivo: ambas inserem no final em tempo amortizado constante, mas o ArrayList pode sofrer realocacoes quando cresce, enquanto a LinkedList cria novos nos a cada insercao.%n");
 	}
 
-	private static void exibirResultadoCapacidades() {
-		System.out.println("===== INFLUENCIA DA CAPACIDADE INICIAL (ArrayList) =====");
+	private void exibirResultadoCapacidades() {
+		System.out.println("===== QUESTAO 1.2 - INFLUENCIA DA CAPACIDADE INICIAL (ArrayList) =====");
 		System.out.printf("Execucoes por capacidade: %d%n%n", TESTES_CAPACIDADE);
 		double melhorTempo = Double.MAX_VALUE;
 		int melhorCapacidade = CAPACIDADES[0];
 
 		for (int capacidade : CAPACIDADES) {
-			double media = mediaBenchmark(TESTES_CAPACIDADE, c -> new ArrayList<>(capacidade), ELEMENTOS_POR_TESTE);
+			double media = testarArrayListComCapacidade(capacidade);
 			if (media < melhorTempo) {
 				melhorTempo = media;
 				melhorCapacidade = capacidade;
@@ -79,5 +95,18 @@ public class Questao01 {
 
 		System.out.printf("%nConfiguracao mais rapida: capacidade inicial %,d%n", melhorCapacidade);
 		System.out.println("Motivo: capacidades iniciais maiores reduzem realocacoes e copias internas do vetor durante o crescimento.");
+	}
+
+	private double testarArrayListComCapacidade(int capacidadeInicial) {
+		double somaMs = 0;
+
+		for (int t = 0; t < TESTES_CAPACIDADE; t++) {
+			List<Integer> lista = new ArrayList<>(capacidadeInicial);
+			long inicio = System.nanoTime();
+			preencherLista(lista);
+			somaMs += (System.nanoTime() - inicio) / 1_000_000.0;
+		}
+
+		return somaMs / TESTES_CAPACIDADE;
 	}
 }
