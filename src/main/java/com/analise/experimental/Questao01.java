@@ -6,10 +6,11 @@ import java.util.List;
 
 public class Questao01 {
 
-	private static final int ELEMENTOS_POR_TESTE = 500_000;
+	private static final int ELEMENTOS_POR_TESTE = 10000;
 	private static final int TESTES_COMPARATIVO = 20;
 	private static final int TESTES_CAPACIDADE = 10;
 	private static final int[] CAPACIDADES = {10, 1_000, 100_000};
+	private static final double NANO_PARA_MS = 1_000_000.0;
 
 	public static void main(String[] args) {
 		new Questao01();
@@ -36,7 +37,7 @@ public class Questao01 {
 			List<Integer> lista = new ArrayList<>(10);
 			long inicio = System.nanoTime();
 			preencherLista(lista);
-			somaMs += (System.nanoTime() - inicio) / 1_000_000.0;
+			somaMs += (System.nanoTime() - inicio) / NANO_PARA_MS;
 		}
 
 		return somaMs / TESTES_COMPARATIVO;
@@ -49,7 +50,7 @@ public class Questao01 {
 			List<Integer> lista = new LinkedList<>();
 			long inicio = System.nanoTime();
 			preencherLista(lista);
-			somaMs += (System.nanoTime() - inicio) / 1_000_000.0;
+			somaMs += (System.nanoTime() - inicio) / NANO_PARA_MS;
 		}
 
 		return somaMs / TESTES_COMPARATIVO;
@@ -104,7 +105,7 @@ public class Questao01 {
 			List<Integer> lista = new ArrayList<>(capacidadeInicial);
 			long inicio = System.nanoTime();
 			preencherLista(lista);
-			somaMs += (System.nanoTime() - inicio) / 1_000_000.0;
+			somaMs += (System.nanoTime() - inicio) / NANO_PARA_MS;
 		}
 
 		return somaMs / TESTES_CAPACIDADE;

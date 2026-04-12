@@ -5,13 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-/*
-*
-* Após os testes, o ArrayList apresentou melhor desempenho em média. Isso ocorre porque, apesar do custo de
-* deslocamento dos elementos, o acesso por índice é mais eficiente que na LinkedList, que precisa percorrer a
-* lista até a posição desejada. Em média, o ArrayList foi aproximadamente 26 vezes mais rápido.
-*
-* */
 public class Questao02 {
     private static final int TAMANHO = 10000;
     private static final int TESTES = 20;
@@ -39,6 +32,13 @@ public class Questao02 {
             System.out.println("LinkedList foi mais rápido");
             System.out.println("Foi " + arredondar(tempoArray / tempoLinked) + " vezes mais rápido");
         }
+
+        System.out.println();
+        System.out.println(
+            "Após os testes, o ArrayList apresentou melhor desempenho em média. Isso ocorre porque, apesar do custo de\n" +
+            "deslocamento dos elementos, o acesso por índice é mais eficiente que na LinkedList, que precisa percorrer a\n" +
+            "lista até a posição desejada. Em média, o ArrayList foi aproximadamente 26 vezes mais rápido."
+        );
     }
 
     private double testarArrayList() {

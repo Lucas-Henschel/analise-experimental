@@ -7,8 +7,9 @@ import java.util.function.IntFunction;
 
 public class Questao03 {
 
-	private static final int ELEMENTOS_POR_TESTE = 50_000;
+	private static final int ELEMENTOS_POR_TESTE = 10000;
 	private static final int TESTES_COMPARATIVO = 20;
+	private static final double NANO_PARA_MS = 1_000_000.0;
 
 	public static void main(String[] args) {
 		aquecerJVM(3);
@@ -60,7 +61,7 @@ public class Questao03 {
 		while (!lista.isEmpty()) {
 			lista.remove(0);
 		}
-		return (System.nanoTime() - inicio) / 1_000_000.0;
+		return (System.nanoTime() - inicio) / NANO_PARA_MS;
 	}
 
 	private static double preencherERemoverFim(IntFunction<List<Integer>> fabrica, int quantidade) {
@@ -74,7 +75,7 @@ public class Questao03 {
 		while (!lista.isEmpty()) {
 			lista.remove(lista.size() - 1);
 		}
-		return (System.nanoTime() - inicio) / 1_000_000.0;
+		return (System.nanoTime() - inicio) / NANO_PARA_MS;
 	}
 
 	private static void exibirResultadoRemocaoInicio(double mediaArray, double mediaLinked) {
